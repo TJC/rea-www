@@ -14,7 +14,7 @@ use Catalyst::Runtime '5.70';
 #                 directory
 
 use parent qw/Catalyst/;
-use Catalyst qw/-Debug
+use Catalyst qw/Unicode
                 ConfigLoader
                 Static::Simple/;
 our $VERSION = '0.01';
@@ -52,7 +52,7 @@ L<REA::WWW::C::Root>, L<Catalyst>
 
 =head1 AUTHOR
 
-Toby Wintermute,,,
+Toby Corkindale
 
 =head1 LICENSE
 

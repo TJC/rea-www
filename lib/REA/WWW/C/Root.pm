@@ -4,10 +4,8 @@ use strict;
 use warnings;
 use parent 'Catalyst::Controller';
 
-#
 # Sets the actions in this controller to be registered with no prefix
 # so they function identically to actions created in MyApp.pm
-#
 __PACKAGE__->config->{namespace} = '';
 
 =head1 NAME
@@ -29,15 +27,23 @@ REA::WWW::C::Root - Root Controller for REA::WWW
 sub index :Path :Args(0) {
     my ( $self, $c ) = @_;
 
-    # Hello World
-    $c->response->body( $c->welcome_message );
 }
 
 sub default :Path {
     my ( $self, $c ) = @_;
+    $c->forward('fourohfour');
+}
+
+=head2 fourohfour
+
+404 error page.
+
+=cut
+
+sub fourohfour :Private {
+    my ( $self, $c ) = @_;
     $c->response->body( 'Page not found' );
     $c->response->status(404);
-    
 }
 
 =head2 end
@@ -50,7 +56,7 @@ sub end : ActionClass('RenderView') {}
 
 =head1 AUTHOR
 
-Toby Wintermute,,,
+Toby Corkindale
 
 =head1 LICENSE
 

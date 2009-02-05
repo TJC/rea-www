@@ -1,0 +1,10 @@
+<script type="text/javascript">
+<!--//--><![CDATA[//><!--
+  $(document).ready(function(){
+    $('.menu a[href=/help]').click(function(){
+      alert('Sorry, there is no help (until you write it)');
+      return false;
+    });
+  });
+//--><!]]>
+</script>

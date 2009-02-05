@@ -19,7 +19,7 @@ TT View for REA::WWW.
 
 L<REA::WWW>
 
-Toby Wintermute,,,
+Toby Corkindale
 
 =head1 LICENSE
 

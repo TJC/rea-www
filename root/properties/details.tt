@@ -1,0 +1,17 @@
+[% INCLUDE header.tt %]
+[% META title = 'Property details ' _ property.title %]
+
+
+<h1>Property #[% prop.id %]</h1>
+[% prop = property %]
+  <div class="property">
+    <div class="location">
+      <a href="[% prop.url %]">[% prop.address %]</a> [% prop.suburb %]
+    </div>
+    <div class="info">[% prop.price %] [% prop.title %]</div>
+    <div class="details">[% prop.description %]</div>
+    <img class="propPhoto" src="[% prop.photo %]"/>
+    <div class="created">First scraped at: [% prop.created %].</div>
+  </div>
+
+[% INCLUDE footer.tt %]

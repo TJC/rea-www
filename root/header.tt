@@ -1,0 +1,23 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" version="XHTML 1.0" xml:lang="en">
+ <head>
+  <title>[% template.title or site.title %]</title>
+  <link href="/static/rea_www.css" rel="stylesheet" type="text/css" />
+  <script type="text/javascript" src="/static/jquery-1.2.6.min.js"></script>
+  [% INCLUDE header_js.tt %]
+ </head>
+ <body>
+   <div class="header">
+     <div class="menu">
+       <ul>
+         <li>Main Menu</li>
+         <li><a href="/">Home</a></li>
+         <li><a href="/help">Help</a></li>
+       </ul>
+     </div>
+     <div class="titlebar">
+       <span class="title">REA::WWW - [% template.title or site.title %]</span>
+     </div>
+   </div>
+
+   <div id="main_content">

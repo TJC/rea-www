@@ -30,7 +30,7 @@ L<Catalyst::Model::DBIC::Schema> Model using schema L<REA::Storage>
 
 =head1 AUTHOR
 
-Toby Wintermute,,,
+Toby Corkindale
 
 =head1 LICENSE
 
