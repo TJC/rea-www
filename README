@@ -1,1 +1,6 @@
 Run script/rea_www_server.pl to test the application.
+
+Note that it expects you to have created a database called 'rea', from the
+REA Toys modules.
+
+If this isn't the case, edit REA/WWW/M/DB.pm and change it :)

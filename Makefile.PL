@@ -7,6 +7,7 @@ all_from 'lib/REA/WWW.pm';
 
 requires 'Catalyst::Runtime' => '5.7015';
 requires 'Catalyst::Plugin::ConfigLoader';
+requires 'Catalyst::Plugin::Unicode';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'REA::Storage';
