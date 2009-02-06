@@ -5,6 +5,8 @@
 <form action="/search" method="GET">
   <p>Enter a postcode, suburb, or property ID:
   <input type="text" size="24" name="q" /><br/>
+  OR enter a free-text string, eg. "merri creek with garage":<br/>
+  <input type="text" size="50" name="ft" /><br/>
   <input type="submit" value="Go"/>
   </p>
   <p><em>Please note that currently only postcodes trigger cache updates</em></p>
