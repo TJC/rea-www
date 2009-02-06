@@ -11,6 +11,7 @@ requires 'Catalyst::Plugin::Unicode';
 requires 'Catalyst::Plugin::Static::Simple';
 requires 'Catalyst::Action::RenderView';
 requires 'REA::Storage';
+requires 'REA::Searcher';
 requires 'XML::RSS';
 requires 'Catalyst::View::TT';
 requires 'Catalyst::Model::DBIC::Schema';

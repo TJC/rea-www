@@ -1,18 +1,16 @@
 [% INCLUDE header.tt %]
 [% META title = 'Property list' %]
 
-<h1>Property list</h1>
-<p><a href="[% location %]/rss"><img src="/static/feed-icon-28x28.png"
-  style="border: none" alt="RSS Feed" title="RSS Feed" /></a></p>
+<h2>Property search result for: [% search_query %]</h2>
 
-[% FOREACH prop IN properties.all %]
+[% FOREACH prop IN properties %]
   <div class="property">
     <div class="location">
       <a href="http://www.realestate.com.au/[% prop.id %]">[% prop.address %]</a> [% prop.suburb %]
     </div>
     <img class="propPhoto" src="[% prop.photo %]"/>
     <div class="info">[% prop.price %] [% prop.title %]</div>
-    <div class="details">[% prop.description %]</div>
+    <div class="details">[% excerpts.${prop.id} %]</div>
     <div class="created">First scraped at: [% prop.created %].</div>
   </div>
 [% END %]

@@ -3,6 +3,7 @@ package REA::WWW::C::Search;
 use strict;
 use warnings;
 use parent 'Catalyst::Controller';
+use REA::Searcher;
 
 =head1 NAME
 
@@ -28,6 +29,10 @@ sub index :Path('/search') :Args(0) {
 
     my $search = $c->request->params->{q};
 
+    if ($c->request->params->{ft}) {
+        $c->detach('fulltext');
+    }
+
     if ($search =~ /^(\d{4})/) {
         $c->response->redirect("/properties/postcode/$1");
         return;
@@ -43,6 +48,34 @@ sub index :Path('/search') :Args(0) {
         return;
     }
     $c->error("Invalid search: $search");
+}
+
+=head2 fulltext
+
+Perform full-text search.
+
+=cut
+
+sub fulltext :Private {
+    my ( $self, $c ) = @_;
+    my $query = $c->request->params->{ft};
+
+    my $searcher = REA::Searcher->new;
+    my $results = $searcher->find( query => $query );
+
+    my (@proplist, %excerpts);
+    for my $hit (@$results) {
+        my $prop = $c->model('DB::Properties')->find($hit->{id});
+        next unless $prop;
+
+        $excerpts{$prop->id} = $hit->{excerpt};
+        push @proplist, $prop;
+    }
+
+    $c->stash->{template} = 'search/fulltext.tt';
+    $c->stash->{search_query} = $query;
+    $c->stash->{properties} = \@proplist;
+    $c->stash->{excerpts} = \%excerpts;
 }
 
 =head1 AUTHOR
