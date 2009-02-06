@@ -1,12 +1,13 @@
 [% INCLUDE header.tt %]
 [% META title = 'Property search' %]
 
-<h1>REA::WWW</h1>
+<h2>REAMirror</h2>
 <form action="/search" method="GET">
   <p>Enter a postcode, suburb, or property ID:
   <input type="text" size="24" name="q" /><br/>
   <input type="submit" value="Go"/>
   </p>
+  <p><em>Please note that currently only postcodes trigger cache updates</em></p>
 </form>
 
 [% INCLUDE footer.tt %]
