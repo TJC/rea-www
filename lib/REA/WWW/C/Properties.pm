@@ -3,6 +3,7 @@ package REA::WWW::C::Properties;
 use strict;
 use warnings;
 use parent 'Catalyst::Controller';
+use REA::Scraper;
 
 =head1 NAME
 
@@ -36,6 +37,8 @@ sub postcode :Chained('properties') PathPart('postcode') CaptureArgs(1) {
         { order_by => 'created DESC' }
     );
     $c->stash->{location} = "$code";
+
+    $c->forward('check_cache');
 }
 
 sub suburb :Chained('properties') PathPart('suburb') CaptureArgs(1) {
@@ -81,6 +84,51 @@ sub details :Chained('property') PathPart('') :Args(0) {
     my ($self, $c) = @_;
 
 }
+
+=head2 check_cache
+
+Check that the cache for this location is fresh.
+
+=cut
+
+sub check_cache :Private {
+    my ($self, $c) = @_;
+
+    my $count = $c->stash->{properties}->count;
+    if ($count == 0) {
+        $c->log->info('Cache is empty, refreshing');
+        $c->forward('refresh_cache');
+        return;
+    }
+
+    # Check timestamp of first property, then reset the iterator.
+    my $newest = $c->stash->{properties}->next->created;
+    if ($newest < DateTime->now->subtract(hours => 8)) {
+        $c->log->info('Cache is out of date, refreshing');
+        $c->forward('refresh_cache');
+        $c->stash->{properties}->reset;
+        return;
+    }
+    $c->log->debug('Cache seems up to date.');
+}
+
+=head2 refresh_cache
+
+Update the cache for this area..
+
+=cut
+
+sub refresh_cache :Private {
+    my ($self, $c) = @_;
+    return unless $c->stash->{location} =~ /^(\d{4}$)/;
+    # Only works with postcodes for the moment..
+
+    my $scraper = REA::Scraper->new( storage => $c->model('DB')->schema );
+    $scraper->postcode($c->stash->{location});
+    my $count = $scraper->scrape;
+    $c->log->info("Scraped $count properties");
+}
+
 
 =head1 AUTHOR
 
