@@ -3,6 +3,7 @@ use strict;
 use warnings;
 use parent 'Catalyst::View';
 use XML::RSS;
+use DateTime;
 
 sub process {
     my ($self, $c) = @_;
@@ -30,13 +31,22 @@ sub make_rss {
         },
     );
 
-    while (my $prop  = $c->stash->{properties}->next) {
+    # Only return props that were created recently..
+    my $day_ago = DateTime->now->subtract( hours => 24 );
+    my $props = $c->stash->{properties}->search(
+        {
+           created => { '>=' => $day_ago },
+        # created => { '>=' => \"(CURRENT_TIMESTAMP - '24 hours'::INTERVAL)" },
+        },
+    );
+
+    while (my $prop  = $props->next) {
         my $title = $prop->address . ' ' . $prop->suburb;
         my $desc = join("\n", $title, $prop->price, $prop->description);
         $rss->add_item(
             title => $title,
             description => $desc,
-            link => $prop->url
+            link => $prop->make_url,
         );
     }
 
