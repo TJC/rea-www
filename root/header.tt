@@ -5,7 +5,6 @@
   <link href="/static/rea_www.css" rel="stylesheet" type="text/css" />
   <script type="text/javascript" src="/static/jquery-1.2.6.min.js"></script>
   [% INCLUDE header_js.tt %]
-  [% INCLUDE google_analytics.tt %]
  </head>
  <body>
    <div class="header">

@@ -8,5 +8,6 @@ All information available here has been provided in the interest of allowing
 easier access to the actual property pages on realestate.com.au's website, in
 effect increasing their views, rather than depriving them of such.
 </div>
+  [% INCLUDE google_analytics.tt %]
 </body>
 </html>
