@@ -1,7 +1,7 @@
 [% INCLUDE header.tt %]
 [% META title = 'Property list' %]
 
-<h1>Property list</h1>
+<h1>[% proptype %] list for [% location %]</h1>
 <p><a href="[% location %]/rss"><img src="/static/feed-icon-28x28.png"
   style="border: none" alt="RSS Feed" title="RSS Feed" /></a></p>
 

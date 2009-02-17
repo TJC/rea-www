@@ -23,8 +23,13 @@ Initial chain point..
 
 =cut
 
-sub properties :Chained CaptureArgs(0) {
-    my ( $self, $c ) = @_;
+sub properties :Chained CaptureArgs(1) {
+    my ( $self, $c, $proptype ) = @_;
+    $c->stash->{properties} = $c->model('DB::Properties')->search(
+        { proptype => $proptype },
+        { order_by => 'created DESC' }
+    );
+    $c->stash->{proptype} = $proptype;
 }
 
 sub postcode :Chained('properties') PathPart('postcode') CaptureArgs(1) {
@@ -32,9 +37,8 @@ sub postcode :Chained('properties') PathPart('postcode') CaptureArgs(1) {
     if ($code !~ /^\d{4}$/) {
         return $c->error("Invalid postcode: $code");
     }
-    $c->stash->{properties} = $c->model('DB::Properties')->search(
+    $c->stash->{properties} = $c->stash->{properties}->search(
         { postcode => $code },
-        { order_by => 'created DESC' }
     );
     $c->stash->{location} = "$code";
 
@@ -46,9 +50,8 @@ sub suburb :Chained('properties') PathPart('suburb') CaptureArgs(1) {
     if ($suburb !~ /^[a-zA-Z ]+$/) {
         return $c->error("Invalid suburb: $suburb");
     }
-    $c->stash->{properties} = $c->model('DB::Properties')->search(
+    $c->stash->{properties} = $c->stash->{properties}->search(
         { suburb => uc($suburb) },
-        { order_by => 'created DESC' }
     );
     $c->stash->{location} = "$suburb";
 }
@@ -109,6 +112,7 @@ sub check_cache :Private {
         $c->stash->{properties}->reset;
         return;
     }
+    $c->stash->{properties}->reset;
     $c->log->debug('Cache seems up to date.');
 }
 
@@ -125,6 +129,7 @@ sub refresh_cache :Private {
 
     my $scraper = REA::Scraper->new( storage => $c->model('DB')->schema );
     $scraper->postcode($c->stash->{location});
+    $scraper->proptype($c->stash->{proptype});
     my $count = $scraper->scrape;
     $c->log->info("Scraped $count properties");
 }

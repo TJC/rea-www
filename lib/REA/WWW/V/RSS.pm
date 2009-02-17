@@ -21,7 +21,8 @@ sub make_rss {
 
     my $rss = XML::RSS->new;
     $rss->channel(
-        title => "REAProps in " . $c->stash->{location},
+        title => $c->stash->{proptype} . " REAProps in "
+               . $c->stash->{location},
         link => 'http://realestate.com.au/',
         description => "REAProps from " . $c->stash->{location},
         syn => {

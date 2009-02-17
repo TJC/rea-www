@@ -28,18 +28,19 @@ sub index :Path('/search') :Args(0) {
     my ( $self, $c ) = @_;
 
     my $search = $c->request->params->{q};
+    my $proptype = $c->request->params->{proptype} || 'residential';
 
     if ($c->request->params->{ft}) {
         $c->detach('fulltext');
     }
 
     if ($search =~ /^(\d{4})/) {
-        $c->response->redirect("/properties/postcode/$1");
+        $c->response->redirect("/properties/$proptype/postcode/$1");
         return;
     }
 
     if ($search =~ /^([\w ]+)$/) {
-        $c->response->redirect("/properties/suburb/$1");
+        $c->response->redirect("/properties/$proptype/suburb/$1");
         return;
     }
 

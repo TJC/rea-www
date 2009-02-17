@@ -5,7 +5,12 @@
 <form action="/search" method="GET">
   <p>Enter a postcode, suburb, or property ID:
   <input type="text" size="24" name="q" /><br/>
-  OR enter a free-text string, eg. "merri creek with garage":<br/>
+  <input type="radio" name="proptype" value="residential"
+   checked="true" /> Residential
+  <input type="radio" name="proptype" value="rental"/> Rental
+  <br/>
+  <br/>
+  Or enter a free-text string, eg. "rental in merri creek with garage":<br/>
   <input type="text" size="50" name="ft" /><br/>
   <input type="submit" value="Go"/>
   </p>
