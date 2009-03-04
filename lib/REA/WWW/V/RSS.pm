@@ -23,11 +23,11 @@ sub make_rss {
     $rss->channel(
         title => $c->stash->{proptype} . " REAProps in "
                . $c->stash->{location},
-        link => 'http://realestate.com.au/',
+        link => 'http://rea.dryft.net',
         description => "REAProps from " . $c->stash->{location},
         syn => {
             updatePeriod => 'daily',
-            updateFrequency => '1',
+            updateFrequency => '3',
             updateBase => '2009-01-01T00:00+00:00',
         },
     );
