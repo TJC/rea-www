@@ -128,6 +128,12 @@ sub refresh_cache :Private {
     # Only works with postcodes for the moment..
 
     my $scraper = REA::Scraper->new( storage => $c->model('DB')->schema );
+    # We don't really need to scrape hundreds of properties on every refresh,
+    # if there's only <5 new properties added per day.
+    # For bonus marks, detect if cache is VERY out of date, then increase,
+    # or if cache practically-fresh, decrease..
+    $scraper->limit(20);
+
     $scraper->postcode($c->stash->{location});
     $scraper->proptype($c->stash->{proptype});
     my $count = $scraper->scrape;
